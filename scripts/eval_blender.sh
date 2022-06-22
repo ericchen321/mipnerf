@@ -15,14 +15,18 @@
 
 # Script for evaluating on the Blender dataset.
 
-SCENE=lego
-EXPERIMENT=debug
-TRAIN_DIR=/Users/barron/tmp/nerf_results/$EXPERIMENT/$SCENE
-DATA_DIR=/Users/barron/data/nerf_synthetic/$SCENE
+EXPERIMENT="$1"
+SCENE="$2"
+WORK_DIR="workspace"
+TRAIN_DIR="$WORK_DIR/$EXPERIMENT/$SCENE"
+DATA_DIR="data/nerf_synthetic/$SCENE"
+LOG_FILENAME="$TRAIN_DIR/${SCENE}_eval.log"
 
-python -m eval \
+python -u -m eval \
   --data_dir=$DATA_DIR \
   --train_dir=$TRAIN_DIR \
-  --chunk=3076 \
+  --chunk=1024 \
   --gin_file=configs/blender.gin \
-  --logtostderr
+  --eval_once \
+  --save_output \
+  --logtostderr 2>&1 | tee $LOG_FILENAME

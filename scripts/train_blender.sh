@@ -15,14 +15,23 @@
 
 # Script for training on the Blender dataset.
 
-SCENE=lego
-EXPERIMENT=debug
-TRAIN_DIR=/Users/barron/tmp/nerf_results/$EXPERIMENT/$SCENE
-DATA_DIR=/Users/barron/data/nerf_synthetic/$SCENE
+EXPERIMENT="$1"
+SCENE="$2"
+WORK_DIR="workspace"
+TRAIN_DIR="$WORK_DIR/$EXPERIMENT/$SCENE"
+DATA_DIR="data/nerf_synthetic/$SCENE"
+LOG_FILENAME="$TRAIN_DIR/${SCENE}_train.log"
 
+mkdir -p $TRAIN_DIR
 rm $TRAIN_DIR/*
-python -m train \
+
+python -u -m train \
   --data_dir=$DATA_DIR \
   --train_dir=$TRAIN_DIR \
   --gin_file=configs/blender.gin \
-  --logtostderr
+  --gin_param="Config.batch_size = 1024" \
+  --gin_param="Config.max_steps = 10000" \
+  --gin_param="Config.save_every = 100" \
+  --render_every 200 \
+  --chunk 1024 \
+  --logtostderr 2>&1 | tee $LOG_FILENAME

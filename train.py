@@ -292,22 +292,22 @@ def main(unused_argv):
           keys[0],
           chunk=FLAGS.chunk)
 
-      vis_suite = vis.visualize_suite(pred_distance, pred_acc)
+      # vis_suite = vis.visualize_suite(pred_distance, pred_acc)
 
       # Log eval summaries on host 0.
       if jax.host_id() == 0:
         psnr = math.mse_to_psnr(((pred_color - test_case['pixels'])**2).mean())
-        ssim = ssim_fn(pred_color, test_case['pixels'])
+        # ssim = ssim_fn(pred_color, test_case['pixels'])
         eval_time = time.time() - t_eval_start
         num_rays = jnp.prod(jnp.array(test_case['rays'].directions.shape[:-1]))
         rays_per_sec = num_rays / eval_time
         summary_writer.scalar('test_rays_per_sec', rays_per_sec, step)
         print(f'Eval {step}: {eval_time:0.3f}s., {rays_per_sec:0.0f} rays/sec')
         summary_writer.scalar('test_psnr', psnr, step)
-        summary_writer.scalar('test_ssim', ssim, step)
+        # summary_writer.scalar('test_ssim', ssim, step)
         summary_writer.image('test_pred_color', pred_color, step)
-        for k, v in vis_suite.items():
-          summary_writer.image('test_pred_' + k, v, step)
+        # for k, v in vis_suite.items():
+        #   summary_writer.image('test_pred_' + k, v, step)
         summary_writer.image('test_pred_acc', pred_acc, step)
         summary_writer.image('test_target', test_case['pixels'], step)
 
