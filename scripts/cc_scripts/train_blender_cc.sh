@@ -12,7 +12,7 @@ module load cuda/11 cudnn
 cd /home/gxc321/
 source MipNerfEnv/bin/activate
 cd /home/gxc321/scratch/mipnerf/
-source scripts/train.sh blender_paper_cc blender lego
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=$CUDA_PATH
 
 declare -a scene_names=(
     "lego"
