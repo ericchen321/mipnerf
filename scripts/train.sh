@@ -25,9 +25,16 @@ python -u -m train \
   --data_dir=$DATA_DIR \
   --train_dir=$TRAIN_DIR \
   --gin_file=configs/${CONFIG}.gin \
-#   --gin_param="Config.batch_size = 1024" \
-#   --gin_param="Config.max_steps = 400" \
-#   --gin_param="Config.save_every = 100" \
   --render_every=$RENDER_EVERY \
   --chunk=1024 \
   --logtostderr 2>&1 | tee $LOG_FILENAME
+# python -u -m train \
+#   --data_dir=$DATA_DIR \
+#   --train_dir=$TRAIN_DIR \
+#   --gin_file=configs/${CONFIG}.gin \
+#   --gin_param="Config.batch_size = 1024" \
+#   --gin_param="Config.max_steps = 400" \
+#   --gin_param="Config.save_every = 100" \
+#   --render_every=$RENDER_EVERY \
+#   --chunk=1024 \
+#   --logtostderr 2>&1 | tee $LOG_FILENAME
