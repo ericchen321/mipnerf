@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --array=0-7
-#SBATCH --time=03:00:00
+#SBATCH --time=144:00:00
 #SBATCH --account=def-rhodin
 #SBATCH --job-name=tr_blender_mipnerf
 #SBATCH --gres=gpu:v100l:1
