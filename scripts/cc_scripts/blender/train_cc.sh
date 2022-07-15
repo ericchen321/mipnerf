@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --array=0
-#SBATCH --time=06:00:00
+#SBATCH --array=0-7
+#SBATCH --time=03:00:00
 #SBATCH --account=def-rhodin
 #SBATCH --job-name=tr_blender_mipnerf
 #SBATCH --gres=gpu:v100l:1
@@ -14,17 +14,4 @@ source MipNerfEnv/bin/activate
 cd /home/gxc321/scratch/mipnerf/
 export XLA_FLAGS=--xla_gpu_cuda_data_dir=$CUDA_PATH
 
-declare -a scene_names=(
-    "lego"
-    # "chair"
-    # "drums"
-    # "ficus"
-    # "hotdog"
-    # "materials"
-    # "mic"
-    # "ship"
-    )
-
-for shape_name in ${shape_names[@]}; do
-    source scripts/train.sh $SLURM_ARRAY_TASK_ID blender blender $shape_name 50000
-done
+source scripts/cc_scripts/blender/train_per_task_cc.sh $SLURM_ARRAY_TASK_ID
